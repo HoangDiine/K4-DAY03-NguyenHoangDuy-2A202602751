@@ -1,29 +1,198 @@
 [
   {
     "step": 1,
-    "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "query": "Chào VinBus, trợ lý này có thể hỗ trợ tôi những việc gì?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Chào bạn! Tôi là Trợ lý Tác tử Dịch vụ Khách hàng VinBus. Tôi có thể hỗ trợ bạn các việc sau:\n\n1. **Tra cứu thông tin tuyến xe buýt VinBus**: Tìm kiếm tuyến phù hợp giữa điểm đi và điểm đến, hoặc xem chi tiết lộ trình của một tuyến cụ thể (dữ liệu giả lập).\n2. **Đăng ký vé tháng giả lập**: Hỗ trợ đăng ký vé tháng cho các tuyến E được hỗ trợ (lưu ý đây là tính năng giả lập, không thu tiền hay phát hành vé thật).\n\nBạn cần tôi giúp tra cứu tuyến nào hay đăng ký vé tháng không?",
+    "latency_ms": 2687.53
   },
   {
     "step": 1,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Tra cứu giúp tôi tuyến OCT1 đi từ Royal City đến Ocean City.",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "tool_name": "route_lookup",
     "arguments": {
-      "student_id": "SV2026001"
+      "destination": "Ocean City",
+      "route_code": "OCT1",
+      "origin": "Royal City"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "route_code": "OCT1",
+        "name": "Royal City - Times City - Ocean City",
+        "service_window": "06:00-23:59",
+        "typical_frequency_minutes": 10,
+        "mock_fare_vnd": 0,
+        "fare_payment_required": false,
+        "route_summary": "Kết nối Royal City, Times City và Ocean City; dùng cho nhu cầu đi từ khu vực Royal City đến Ocean City.",
+        "key_stops": [
+          "Royal City R1",
+          "Times City (478 Minh Khai)",
+          "Tòa nhà S2.15",
+          "TTTM Center Point Đại lộ Ngọc Trai",
+          "Bệnh viện Vinmec",
+          "Công viên VinWonders Water Park"
+        ],
+        "sources": [
+          {
+            "url": "https://vinbus.vn/thong-bao-dieu-chinh-lo-trinh-mo-rong-ket-noi-toi-benh-vien-vinmec-ocean-park-2",
+            "effective_from": "2026-04-07",
+            "note": "Nguồn chính thức về điều chỉnh lộ trình và các điểm dừng bổ sung."
+          },
+          {
+            "url": "https://maps.vinbus.vn/hn/route/101011",
+            "note": "Bản đồ VinBus hiển thị danh sách trạm OCT1."
+          }
+        ]
+      }
+    },
+    "latency_ms": 953.11
   },
   {
     "step": 2,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Tra cứu giúp tôi tuyến OCT1 đi từ Royal City đến Ocean City.",
     "action_type": "FINAL_ANSWER",
-    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
-    "latency_ms": 10.0
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Dựa trên dữ liệu tra cứu tuyến VinBus (giả lập), dưới đây là thông tin chi tiết về tuyến **OCT1**:\n\n- **Tên tuyến:** Royal City - Times City - Ocean City\n- **Lộ trình / Tóm tắt:** Kết nối Royal City, Times City và Ocean City; dùng cho nhu cầu đi từ khu vực Royal City đến Ocean City.\n- **Thời gian hoạt động:** 06:00 - 23:59\n- **Tần suất thông thường:** Khoảng 10 phút/chuyến\n- **Giá vé (giả lập):** 0 VND (Miễn phí yêu cầu thanh toán)\n- **Các trạm dừng chính:** \n  - Royal City R1\n  - Times City (478 Minh Khai)\n  - Tòa nhà S2.15\n  - TTTM Center Point Đại lộ Ngọc Trai\n  - Bệnh viện Vinmec\n  - Công viên VinWonders Water Park\n- **Nguồn tham khảo chính thức:** \n  - [Thông báo điều chỉnh lộ trình](https://vinbus.vn/thong-bao-dieu-chinh-lo-trinh-mo-rong-ket-noi-toi-benh-vien-vinmec-ocean-park-2) (Có hiệu lực từ 07/04/2026)\n  - [Bản đồ tuyến OCT1](https://maps.vinbus.vn/hn/route/101011)\n\n*(Lưu ý: Đây là dữ liệu giả lập offline, không phải lịch chạy thời gian thực.)*",
+    "latency_ms": 1743.39
+  },
+  {
+    "step": 1,
+    "query": "Tôi là Nguyễn Minh Anh, số điện thoại 0901234567. Hãy đăng ký vé tháng giả lập loại phổ thông cho tuyến E05 bắt đầu từ 01/10/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "monthly_pass_register",
+    "arguments": {
+      "passenger_name": "Nguyễn Minh Anh",
+      "route_code": "E05",
+      "phone_number": "0901234567",
+      "effective_date": "01/10/2026",
+      "passenger_type": "regular"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "registration_id": "SIM-PASS-E05-20261001-4567",
+      "passenger_name": "Nguyễn Minh Anh",
+      "route_code": "E05",
+      "effective_date": "2026-10-01",
+      "passenger_type": "regular",
+      "monthly_pass_price_vnd": 140000,
+      "simulated_only": true,
+      "message": "Đã tạo đăng ký vé tháng giả lập; không có giao dịch thanh toán hoặc vé thật được phát hành."
+    },
+    "latency_ms": 994.88
+  },
+  {
+    "step": 2,
+    "query": "Tôi là Nguyễn Minh Anh, số điện thoại 0901234567. Hãy đăng ký vé tháng giả lập loại phổ thông cho tuyến E05 bắt đầu từ 01/10/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Đăng ký vé tháng giả lập cho bạn đã thành công! Dưới đây là thông tin chi tiết:\n\n- **Mã đăng ký:** `SIM-PASS-E05-20261001-4567`\n- **Họ tên hành khách:** Nguyễn Minh Anh\n- **Số điện thoại:** 0901234567\n- **Tuyến:** E05\n- **Loại vé:** Phổ thông (regular)\n- **Ngày hiệu lực:** 01/10/2026\n- **Giá vé tháng giả lập:** 140.000 VNĐ\n\n*Lưu ý: Đây là hệ thống đăng ký vé tháng giả lập (simulated_only: true). Không có giao dịch thanh toán hoặc vé thật nào được phát hành.*",
+    "latency_ms": 1370.64
+  },
+  {
+    "step": 1,
+    "query": "Tôi đi từ Bến xe Mỹ Đình đến Ocean Park hằng ngày. Hãy tìm tuyến phù hợp trong dữ liệu giả lập, rồi đăng ký vé tháng giả lập loại phổ thông cho tôi: Trần Gia Huy, 0987654321, hiệu lực từ 01/10/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "route_lookup",
+    "arguments": {
+      "origin": "Bến xe Mỹ Đình",
+      "destination": "Ocean Park"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "origin": "Bến xe Mỹ Đình",
+      "destination": "Ocean Park",
+      "recommended_route_code": "E01",
+      "data": {
+        "route_code": "E01",
+        "name": "Bến xe Mỹ Đình - KĐT Ocean Park",
+        "service_window": "05:00-21:00",
+        "typical_frequency_minutes": 15,
+        "mock_fare_vnd": 12000,
+        "fare_payment_required": true,
+        "route_summary": "Kết nối Bến xe Mỹ Đình với KĐT Ocean Park qua Phạm Hùng, Khuất Duy Tiến, Nguyễn Trãi, Trường Chinh, Minh Khai, Cầu Vĩnh Tuy, Aeon Mall Long Biên và Cổ Linh.",
+        "key_stops": [
+          "Bến xe Mỹ Đình",
+          "Phạm Hùng",
+          "Khuất Duy Tiến",
+          "Nguyễn Trãi",
+          "Trường Chinh",
+          "Cầu Vĩnh Tuy",
+          "Aeon Mall Long Biên",
+          "KĐT Ocean Park"
+        ],
+        "sources": [
+          {
+            "url": "https://www.vinbus.vn/xe-buyt-dien-vinbus-chinh-thuc-tham-gia-mang-luoi-vthkcc-tai-ha-noi",
+            "note": "Nguồn chính thức về hướng tuyến E01 và giờ/tần suất công bố khi vận hành."
+          },
+          {
+            "url": "https://vinbus.vn/lien-he",
+            "note": "Trang FAQ VinBus nêu giá vé lượt E01 là 12.000 đồng và các loại vé tháng điện tử tham chiếu."
+          }
+        ]
+      },
+      "alternative_route_codes": [
+        "E03"
+      ]
+    },
+    "latency_ms": 990.9
+  },
+  {
+    "step": 2,
+    "query": "Tôi đi từ Bến xe Mỹ Đình đến Ocean Park hằng ngày. Hãy tìm tuyến phù hợp trong dữ liệu giả lập, rồi đăng ký vé tháng giả lập loại phổ thông cho tôi: Trần Gia Huy, 0987654321, hiệu lực từ 01/10/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "monthly_pass_register",
+    "arguments": {
+      "effective_date": "01/10/2026",
+      "passenger_type": "regular",
+      "phone_number": "0987654321",
+      "passenger_name": "Trần Gia Huy",
+      "route_code": "E01"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "registration_id": "SIM-PASS-E01-20261001-4321",
+      "passenger_name": "Trần Gia Huy",
+      "route_code": "E01",
+      "effective_date": "2026-10-01",
+      "passenger_type": "regular",
+      "monthly_pass_price_vnd": 140000,
+      "simulated_only": true,
+      "message": "Đã tạo đăng ký vé tháng giả lập; không có giao dịch thanh toán hoặc vé thật được phát hành."
+    },
+    "latency_ms": 995.46
+  },
+  {
+    "step": 3,
+    "query": "Tôi đi từ Bến xe Mỹ Đình đến Ocean Park hằng ngày. Hãy tìm tuyến phù hợp trong dữ liệu giả lập, rồi đăng ký vé tháng giả lập loại phổ thông cho tôi: Trần Gia Huy, 0987654321, hiệu lực từ 01/10/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Đăng ký vé tháng giả lập của bạn đã được tạo thành công! Dưới đây là thông tin chi tiết:\n\n- **Mã đăng ký:** `SIM-PASS-E01-20261001-4321`\n- **Họ tên hành khách:** Trần Gia Huy\n- **Số điện thoại:** 0987654321\n- **Tuyến:** E01\n- **Ngày hiệu lực:** 01/10/2026\n- **Loại vé:** Phổ thông (`regular`)\n- **Giá vé (giả lập):** 140.000 VNĐ\n\n*Lưu ý: Đây là đăng ký giả lập, không có giao dịch thanh toán hoặc vé thật nào được phát hành.*",
+    "latency_ms": 1789.89
+  },
+  {
+    "step": 1,
+    "query": "Hãy đăng ký vé tháng giả lập cho tuyến E99 từ 01/10/2026, khách Lê Thu Hà, 0912345678.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "route_lookup",
+    "arguments": {
+      "route_code": "E99"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy tuyến 'E99' trong mock data."
+    },
+    "latency_ms": 980.05
+  },
+  {
+    "step": 2,
+    "query": "Hãy đăng ký vé tháng giả lập cho tuyến E99 từ 01/10/2026, khách Lê Thu Hà, 0912345678.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Rất tiếc, hệ thống không tìm thấy tuyến 'E99' trong dữ liệu giả lập (mock data), vì vậy tôi không thể thực hiện đăng ký vé tháng cho tuyến này. \n\nLưu ý rằng mọi dịch vụ đăng ký vé tháng tại đây chỉ mang tính chất giả lập và không phát hành vé thật. Bạn có thể kiểm tra lại mã tuyến E khác (như E01, E02, E03, E05...) để tôi hỗ trợ bạn nhé!",
+    "latency_ms": 1248.49
   }
 ]

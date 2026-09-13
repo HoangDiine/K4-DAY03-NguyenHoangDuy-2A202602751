@@ -30,37 +30,44 @@
 
 > ⚠️ **YÊU CẦU NGHIỆM THU:** Mở tệp `.env` điền `GEMINI_API_KEY` (hoặc `OPENAI_API_KEY`) để kết nối LLM thật trước khi thực thi `python src/app.py --all`. Bài nộp chỉ dùng Mock Offline Provider sẽ không đạt điểm nghiệm thực tế.
 
-Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.json` sinh ra từ phản hồi LLM API thật:
+Dưới đây là đoạn trích TC02 từ lần chạy `python -X utf8 src/app.py --all` với `GeminiProvider`. Gemini gọi tool qua MCP, nhận observation từ mock data, rồi tạo câu trả lời cuối ở bước 2 (độ trễ 1.743,39 ms).
 
 ```json
-[
-  {
-    "step": 1,
-    "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
-    "arguments": {
-      "student_id": "SV2026001"
-    },
-    "observation": {
-      "status": "SUCCESS",
-      "student_id": "SV2026001",
-      "data": {
-        "full_name": "Nguyễn Văn An",
-        "gpa": 3.85
-      }
-    },
-    "latency_ms": 120.5
-  }
-]
+{
+  "step": 1,
+  "query": "Tra cứu giúp tôi tuyến OCT1 đi từ Royal City đến Ocean City.",
+  "action_type": "TOOL_EXECUTION",
+  "tool_name": "route_lookup",
+  "arguments": {
+    "destination": "Ocean City",
+    "route_code": "OCT1",
+    "origin": "Royal City"
+  },
+  "observation": {
+    "status": "SUCCESS",
+    "data": {
+      "route_code": "OCT1",
+      "name": "Royal City - Times City - Ocean City",
+      "service_window": "06:00-23:59",
+      "typical_frequency_minutes": 10,
+      "mock_fare_vnd": 0,
+      "fare_payment_required": false
+    }
+  },
+  "latency_ms": 953.11
+}
 ```
+
+Tệp `docs/trace_waterfall.json` của lần chạy này có 10 sự kiện: 5 `FINAL_ANSWER` và 5 `TOOL_EXECUTION` (3 lượt `route_lookup`, 2 lượt `monthly_pass_register`). Bốn observation thành công; observation còn lại là `NOT_FOUND` cho E99 theo đúng test edge case, và Agent không tạo đăng ký cho tuyến không tồn tại.
 
 ---
 
 ## 3. TỔNG KẾT KẾT QUẢ NGHIỆM THU & NỘP BÀI
 
-- [ ] Đã điền API Key thật trong `.env` và xác nhận Agent chạy mượt mà trên LLM API thật (Gemini/OpenAI).
-- **Tổng số Test Cases đã chạy thành công:** ___ / 5 test cases.
-- **Số lượt gọi Tool qua MCP Server chính xác:** ___ lượt.
+- [x] Đã điền API Key thật trong `.env` và xác nhận Agent chạy trên `GeminiProvider` (`gemini-3.5-flash-lite`).
+- **Tổng số Test Cases đã chạy thành công:** **5 / 5** test cases.
+- **Số lượt gọi Tool qua MCP Server chính xác:** **5** lượt (3 `route_lookup`, 2 `monthly_pass_register`).
+- **Kiểm tra interactive:** Đã chạy `python -X utf8 src/app.py --interactive`, tra cứu OCT1 thành công qua `route_lookup`; sau đó chạy lại `--all` để giữ waterfall trace đầy đủ 5 test case làm artifact nộp bài.
 - **Kết quả đẩy Repo nộp bài:** [ ] Đã Commit và Push mã nguồn thành công lên GitHub cá nhân.
 
 ---
