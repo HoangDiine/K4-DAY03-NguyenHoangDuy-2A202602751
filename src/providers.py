@@ -6,6 +6,7 @@ Hỗ trợ Native Tool Calling và chuyển đổi linh hoạt qua biến môi t
 import os
 import sys
 import json
+import re
 from typing import Dict, Any, List
 from dotenv import load_dotenv
 
@@ -32,32 +33,123 @@ class MockOfflineProvider(BaseLLMProvider):
         self.model_name = "Offline-Mock-Model-2026"
 
     def generate(self, prompt: str, system_prompt: str = "") -> str:
-        return f"[Mock Chatbot Response]: Xin chào! Tôi đã nhận được câu hỏi '{prompt}'. (Chế độ Chatbot không có Tool tra cứu dữ liệu thời gian thực)."
+        return (
+            "[Mock Chatbot Response]: Tôi có thể giới thiệu phạm vi hỗ trợ VinBus, "
+            "nhưng Chatbot Baseline không tra cứu tuyến hoặc đăng ký vé tháng."
+        )
 
     def generate_with_tools(self, prompt: str, tools_schema: List[Dict[str, Any]], system_prompt: str = "") -> Dict[str, Any]:
         prompt_lower = prompt.lower()
-        
-        # Mô phỏng nhận diện intent gọi Tool
-        if "sv2026001" in prompt_lower and "đặt lịch" in prompt_lower:
-            return {
-                "type": "tool_call",
-                "tool_name": "schedule_appointment",
-                "arguments": {"student_id": "SV2026001", "datetime_str": "14:00 15/09/2026", "advisor_name": "PGS.TS Nguyễn Văn A"},
-                "thought": "Người dùng yêu cầu đặt lịch hẹn tư vấn cho sinh viên SV2026001. Tôi sẽ gọi tool schedule_appointment."
-            }
-        elif "sv2026001" in prompt_lower or "tra cứu" in prompt_lower:
-            return {
-                "type": "tool_call",
-                "tool_name": "academic_query",
-                "arguments": {"student_id": "SV2026001"},
-                "thought": "Người dùng muốn tra cứu thông tin học vụ của sinh viên SV2026001. Tôi sẽ gọi tool academic_query."
-            }
-        else:
+
+        if "mcp observation" in prompt_lower:
+            observation = self._extract_observation(prompt)
+            if observation.get("registration_id"):
+                return {
+                    "type": "text",
+                    "content": (
+                        "Đã tạo đăng ký vé tháng giả lập thành công"
+                        f" (mã: {observation['registration_id']}). "
+                        "Không có thanh toán hoặc vé thật được phát hành."
+                    ),
+                    "thought": "Observation đã có mã đăng ký; có thể trả lời cuối cùng.",
+                }
+
+            if observation.get("status") != "SUCCESS":
+                return {
+                    "type": "text",
+                    "content": observation.get(
+                        "message",
+                        "Không thể hoàn tất yêu cầu vì Tool không trả về kết quả thành công.",
+                    ),
+                    "thought": "Observation là lỗi nên không gọi Tool tiếp.",
+                }
+
+            recommended_route_code = observation.get("recommended_route_code")
+            if recommended_route_code and "đăng ký" in prompt_lower:
+                return {
+                    "type": "tool_call",
+                    "tool_name": "monthly_pass_register",
+                    "arguments": self._monthly_pass_arguments(prompt, recommended_route_code),
+                    "thought": "Đã có tuyến được đề xuất; tiến hành đăng ký vé tháng giả lập.",
+                }
+
+            route = observation.get("data", {})
             return {
                 "type": "text",
-                "content": f"[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-                "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool."
+                "content": (
+                    f"Tuyến {route.get('route_code', 'được yêu cầu')}: {route.get('name', '')}. "
+                    f"Khung giờ mock {route.get('service_window', 'không có')}; "
+                    f"tần suất khoảng {route.get('typical_frequency_minutes', 'không có')} phút/lượt. "
+                    "Thông tin này chỉ phục vụ lab, không phải dữ liệu vận hành thời gian thực."
+                ),
+                "thought": "Observation tra tuyến đã đủ để trả lời.",
             }
+
+        route_code = self._extract_route_code(prompt)
+        if "đăng ký" in prompt_lower and route_code:
+            return {
+                "type": "tool_call",
+                "tool_name": "monthly_pass_register",
+                "arguments": self._monthly_pass_arguments(prompt, route_code),
+                "thought": "Người dùng yêu cầu đăng ký vé tháng cho mã tuyến đã nêu.",
+            }
+
+        if "bến xe mỹ đình" in prompt_lower and "ocean park" in prompt_lower:
+            return {
+                "type": "tool_call",
+                "tool_name": "route_lookup",
+                "arguments": {"origin": "Bến xe Mỹ Đình", "destination": "Ocean Park"},
+                "thought": "Cần tra tuyến phù hợp từ Bến xe Mỹ Đình đến Ocean Park.",
+            }
+
+        if route_code and ("tra cứu" in prompt_lower or "tuyến" in prompt_lower):
+            return {
+                "type": "tool_call",
+                "tool_name": "route_lookup",
+                "arguments": {"route_code": route_code},
+                "thought": "Người dùng cần tra cứu thông tin của một tuyến cụ thể.",
+            }
+
+        return {
+            "type": "text",
+            "content": "Tôi hỗ trợ tra cứu tuyến VinBus trong mock data và tạo đăng ký vé tháng giả lập cho các tuyến E được hỗ trợ.",
+            "thought": "Câu hỏi giới thiệu không cần gọi Tool.",
+        }
+
+    @staticmethod
+    def _extract_route_code(prompt: str) -> str:
+        match = re.search(r"\b(?:E|OCP|OCT)\s*\d{1,2}\b", prompt, flags=re.IGNORECASE)
+        return re.sub(r"\s+", "", match.group(0)).upper() if match else ""
+
+    @staticmethod
+    def _extract_observation(prompt: str) -> Dict[str, Any]:
+        marker = "MCP Observation sau khi gọi "
+        if marker not in prompt:
+            return {}
+        observation_section = prompt.split(marker, 1)[1]
+        observation_text = observation_section.split(":\n", 1)[1].split(
+            "\n\nDựa hoàn toàn", 1
+        )[0]
+        try:
+            return json.loads(observation_text)
+        except json.JSONDecodeError:
+            return {}
+
+    @staticmethod
+    def _monthly_pass_arguments(prompt: str, route_code: str) -> Dict[str, Any]:
+        name_match = re.search(r"cho tôi:\s*([^,]+),", prompt, flags=re.IGNORECASE)
+        if not name_match:
+            name_match = re.search(r"tôi là\s+([^,]+),", prompt, flags=re.IGNORECASE)
+        phone_match = re.search(r"\b0\d{9,10}\b", prompt)
+        date_match = re.search(r"\b\d{2}/\d{2}/\d{4}\b", prompt)
+        passenger_type = "priority_hs_sv_or_worker" if "ưu tiên" in prompt.lower() else "regular"
+        return {
+            "passenger_name": name_match.group(1).strip() if name_match else "Khách hàng mock",
+            "phone_number": phone_match.group(0) if phone_match else "0900000000",
+            "route_code": route_code,
+            "effective_date": date_match.group(0) if date_match else "01/10/2026",
+            "passenger_type": passenger_type,
+        }
 
 
 class GeminiProvider(BaseLLMProvider):
