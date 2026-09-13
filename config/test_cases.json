@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào VinBus, trợ lý này có thể hỗ trợ tôi những việc gì?",
+    "expected_behavior": "Chatbot Baseline trả lời trực tiếp: hỗ trợ tra cứu các tuyến VinBus trong dữ liệu giả lập và đăng ký vé tháng giả lập; không gọi Tool.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Tra cứu giúp tôi tuyến OCT1 đi từ Royal City đến Ocean City.",
+    "expected_behavior": "Agent gọi Tool 'route_lookup' với route_code='OCT1', sau đó trả về lộ trình tóm tắt, khung giờ và tần suất từ mock data.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "monthly_pass_registration",
+    "question": "Tôi là Nguyễn Minh Anh, số điện thoại 0901234567. Hãy đăng ký vé tháng giả lập loại phổ thông cho tuyến E05 bắt đầu từ 01/10/2026.",
+    "expected_behavior": "Agent xác nhận đây là yêu cầu đăng ký vé tháng và gọi Tool 'monthly_pass_register' với thông tin hành khách, mã tuyến E05, loại vé phổ thông, ngày hiệu lực 01/10/2026. Agent thông báo giá tham chiếu mock và mã đăng ký giả lập, không khẳng định đã thanh toán hay phát hành vé thật.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Tôi đi từ Bến xe Mỹ Đình đến Ocean Park hằng ngày. Hãy tìm tuyến phù hợp trong dữ liệu giả lập, rồi đăng ký vé tháng giả lập loại phổ thông cho tôi: Trần Gia Huy, 0987654321, hiệu lực từ 01/10/2026.",
+    "expected_behavior": "Agent thực hiện ReAct nhiều bước: (1) gọi 'route_lookup' theo điểm đi Bến xe Mỹ Đình và điểm đến Ocean Park; (2) quan sát E01 là tuyến phù hợp, thuộc nhóm có vé tháng mock; (3) gọi 'monthly_pass_register' với tuyến E01, loại vé phổ thông và dữ liệu hành khách; (4) trả kết quả kèm giá tham chiếu và mã đăng ký giả lập. Nếu tra cứu không trả tuyến phù hợp, Agent phải dừng và hỏi lại thay vì đăng ký.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy đăng ký vé tháng giả lập cho tuyến E99 từ 01/10/2026, khách Lê Thu Hà, 0912345678.",
+    "expected_behavior": "Agent gọi 'route_lookup' hoặc kiểm tra mã tuyến trước khi đăng ký. Khi Tool trả về NOT_FOUND cho E99, Agent lịch sự báo không có tuyến đó trong mock data (các tuyến có thể đăng ký là E01, E02, E03, E05), đề nghị chọn lại và tuyệt đối không gọi 'monthly_pass_register' hay bịa mã đăng ký.",
+    "complexity": "Medium"
+  }
+]

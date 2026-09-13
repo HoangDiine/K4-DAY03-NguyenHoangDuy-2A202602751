@@ -1,0 +1,270 @@
+{
+  "dataset_name": "VinBus Ocean City mock data",
+  "purpose": "Offline dataset for the Day 03 ReAct Agent lab only; it does not represent a live timetable, seat inventory, price, payment result, or an actual VinBus ticket registration.",
+  "snapshot_date": "2026-09-13",
+  "city": "Hà Nội",
+  "routes": [
+    {
+      "route_code": "OCP1",
+      "name": "Nội liên khu Ocean Park 1, 2, 3",
+      "service_window": "05:00-23:59",
+      "typical_frequency_minutes": 15,
+      "mock_fare_vnd": 0,
+      "fare_payment_required": false,
+      "route_summary": "Vòng kết nối Ocean Park 1, Ocean Park 2 và Ocean Park 3; có các điểm đáng chú ý như TTTM Center Point Đại lộ Ngọc Trai, Bệnh viện Vinmec và Công viên VinWonders Water Park.",
+      "key_stops": [
+        "Bến trả Ocean Park 2,3",
+        "Đường 52m",
+        "TTTM Center Point Đại lộ Ngọc Trai",
+        "Bệnh viện Vinmec",
+        "KĐT Ocean Park 3 - Công viên VinWonders Water Park"
+      ],
+      "sources": [
+        {
+          "url": "https://vinbus.vn/thong-bao-dieu-chinh-lo-trinh-mo-rong-ket-noi-toi-benh-vien-vinmec-ocean-park-2",
+          "effective_from": "2026-04-07",
+          "note": "Nguồn chính thức mô tả điều chỉnh lộ trình và các điểm dừng bổ sung."
+        },
+        {
+          "url": "https://maps.vinbus.vn/hn/station/111131",
+          "note": "Bản đồ VinBus hiển thị phạm vi tuyến, giờ hoạt động và tần suất tham chiếu."
+        }
+      ]
+    },
+    {
+      "route_code": "OCP2",
+      "name": "Nội khu Ocean Park 2, 3",
+      "service_window": "06:00-23:59",
+      "typical_frequency_minutes": 15,
+      "mock_fare_vnd": 0,
+      "fare_payment_required": false,
+      "route_summary": "Tuyến vòng nội khu Ocean Park 2,3, kết nối Grand World/The Venice, K-Town, các phân khu Ocean Park 2 và VinWonders Water Park.",
+      "key_stops": [
+        "Đối diện Cổng Grand World - The Venice",
+        "Cầu Sóng The K Town",
+        "TTTM Center Point Đại lộ Ngọc Trai",
+        "Công viên VinWonders Wave Park",
+        "Công viên VinWonders Water Park",
+        "Phân khu Thời Đại - Đường Thời Đại 6"
+      ],
+      "sources": [
+        {
+          "url": "https://vinbus.vn/vi/vinbus-xin-thong-bao-chinh-thuc-van-hanh-tuyen-noi-khu-kdt-vinhomes-ocean-park-2-3-tu-ngay-17-8-2024",
+          "effective_from": "2024-08-17",
+          "note": "Nguồn chính thức về phạm vi tuyến, các điểm dừng và tần suất công bố."
+        },
+        {
+          "url": "https://maps.vinbus.vn/hn/station/111118",
+          "note": "Bản đồ VinBus được dùng để chuẩn hoá khung giờ mock 06:00-23:59."
+        }
+      ]
+    },
+    {
+      "route_code": "OCT1",
+      "name": "Royal City - Times City - Ocean City",
+      "service_window": "06:00-23:59",
+      "typical_frequency_minutes": 10,
+      "mock_fare_vnd": 0,
+      "fare_payment_required": false,
+      "route_summary": "Kết nối Royal City, Times City và Ocean City; dùng cho nhu cầu đi từ khu vực Royal City đến Ocean City.",
+      "key_stops": [
+        "Royal City R1",
+        "Times City (478 Minh Khai)",
+        "Tòa nhà S2.15",
+        "TTTM Center Point Đại lộ Ngọc Trai",
+        "Bệnh viện Vinmec",
+        "Công viên VinWonders Water Park"
+      ],
+      "sources": [
+        {
+          "url": "https://vinbus.vn/thong-bao-dieu-chinh-lo-trinh-mo-rong-ket-noi-toi-benh-vien-vinmec-ocean-park-2",
+          "effective_from": "2026-04-07",
+          "note": "Nguồn chính thức về điều chỉnh lộ trình và các điểm dừng bổ sung."
+        },
+        {
+          "url": "https://maps.vinbus.vn/hn/route/101011",
+          "note": "Bản đồ VinBus hiển thị danh sách trạm OCT1."
+        }
+      ]
+    },
+    {
+      "route_code": "OCT2",
+      "name": "Bờ Hồ - Ocean City",
+      "service_window": "06:05-23:59",
+      "typical_frequency_minutes": 10,
+      "mock_fare_vnd": 0,
+      "fare_payment_required": false,
+      "route_summary": "Kết nối khu vực Bờ Hồ/Nhà Hát Lớn với Ocean City qua các điểm trung tâm và Ocean Park.",
+      "key_stops": [
+        "Nhà Hát Lớn",
+        "Bờ Hồ - Ngân hàng Nhà nước",
+        "TTTM Vincom Bà Triệu",
+        "Vinhomes Ocean Park 1 (S2.15)",
+        "TTTM Center Point Đại lộ Ngọc Trai",
+        "Công viên VinWonders Water Park",
+        "Cầu Đông Tây"
+      ],
+      "sources": [
+        {
+          "url": "https://vinbus.vn/vinbus-xin-thong-bao-tu-ngay-04-01-2024-tuyen-ocp06-doi-thanh-tuyen-va-dieu-chinh-lo-trinh",
+          "effective_from": "2024-01-04",
+          "note": "Nguồn chính thức về tên tuyến, lộ trình và tần suất công bố."
+        },
+        {
+          "url": "https://maps.vinbus.vn/hn/station/111131",
+          "note": "Bản đồ VinBus được dùng để chuẩn hoá khung giờ mock 06:05-23:59."
+        }
+      ]
+    },
+    {
+      "route_code": "E01",
+      "name": "Bến xe Mỹ Đình - KĐT Ocean Park",
+      "service_window": "05:00-21:00",
+      "typical_frequency_minutes": 15,
+      "mock_fare_vnd": 12000,
+      "fare_payment_required": true,
+      "route_summary": "Kết nối Bến xe Mỹ Đình với KĐT Ocean Park qua Phạm Hùng, Khuất Duy Tiến, Nguyễn Trãi, Trường Chinh, Minh Khai, Cầu Vĩnh Tuy, Aeon Mall Long Biên và Cổ Linh.",
+      "key_stops": [
+        "Bến xe Mỹ Đình",
+        "Phạm Hùng",
+        "Khuất Duy Tiến",
+        "Nguyễn Trãi",
+        "Trường Chinh",
+        "Cầu Vĩnh Tuy",
+        "Aeon Mall Long Biên",
+        "KĐT Ocean Park"
+      ],
+      "sources": [
+        {
+          "url": "https://www.vinbus.vn/xe-buyt-dien-vinbus-chinh-thuc-tham-gia-mang-luoi-vthkcc-tai-ha-noi",
+          "note": "Nguồn chính thức về hướng tuyến E01 và giờ/tần suất công bố khi vận hành."
+        },
+        {
+          "url": "https://vinbus.vn/lien-he",
+          "note": "Trang FAQ VinBus nêu giá vé lượt E01 là 12.000 đồng và các loại vé tháng điện tử tham chiếu."
+        }
+      ]
+    },
+    {
+      "route_code": "E02",
+      "name": "Hào Nam (Ga Cát Linh) - KĐT Ocean Park",
+      "service_window": "05:00-22:00",
+      "typical_frequency_minutes": 15,
+      "frequency_range_minutes": "12-20",
+      "mock_fare_vnd": 12000,
+      "fare_payment_required": true,
+      "route_summary": "Kết nối Hào Nam/Ga Cát Linh với KĐT Ocean Park qua Kim Mã, khu vực trung tâm Hồ Gươm, Cầu Chương Dương, Nguyễn Văn Cừ, Sài Đồng và Lý Thánh Tông.",
+      "key_stops": [
+        "Hào Nam (Ga Cát Linh)",
+        "Kim Mã",
+        "Phan Bội Châu - Hai Bà Trưng",
+        "Lý Thái Tổ",
+        "Cầu Chương Dương",
+        "Nguyễn Văn Cừ",
+        "Sài Đồng",
+        "KĐT Ocean Park"
+      ],
+      "sources": [
+        {
+          "url": "https://vinbus.vn/thong-bao-dieu-chinh-lo-trinh-tuyen-e02-ap-dung-tu-ngay-15-03-2023",
+          "effective_from": "2023-03-15",
+          "note": "Nguồn chính thức về lộ trình điều chỉnh và dải tần suất E02."
+        },
+        {
+          "url": "https://vinbus.vn/lien-he",
+          "note": "Trang FAQ VinBus nêu giá vé lượt E02 là 12.000 đồng và các loại vé tháng điện tử tham chiếu."
+        }
+      ]
+    },
+    {
+      "route_code": "E03",
+      "name": "Mỹ Đình - KĐT Ocean Park",
+      "service_window": "05:00-21:00",
+      "typical_frequency_minutes": 16,
+      "frequency_range_minutes": "12-20",
+      "mock_fare_vnd": 15000,
+      "fare_payment_required": true,
+      "route_summary": "Kết nối Mỹ Đình với KĐT Ocean Park qua Phạm Hùng, Trần Duy Hưng, Nguyễn Chí Thanh, Thái Hà, Chùa Bộc, Bạch Mai, Minh Khai và Cầu Vĩnh Tuy.",
+      "key_stops": [
+        "TT Y tế dự phòng Cầu Diễn",
+        "Bến xe Mỹ Đình",
+        "Vincom Trần Duy Hưng",
+        "Nguyễn Chí Thanh",
+        "Thái Hà",
+        "Chùa Bộc",
+        "Times City (478 Minh Khai)",
+        "KĐT Ocean Park"
+      ],
+      "sources": [
+        {
+          "url": "https://vinbus.vn/vinbus-xin-thong-bao-ve-viec-dieu-chinh-lo-trinh-tan-suat-va-thoi-gian-hoat-dong-tuyen-e03-va-e04-ke-tu-ngay-01-01-2024",
+          "effective_from": "2024-01-01",
+          "note": "Nguồn chính thức về lộ trình, thời gian hoạt động và dải tần suất E03."
+        },
+        {
+          "url": "https://maps.vinbus.vn/hn/route/101101",
+          "note": "Bản đồ VinBus đối chiếu các điểm dừng E03."
+        },
+        {
+          "url": "https://vinbus.vn/lien-he",
+          "note": "Trang FAQ VinBus nêu giá vé lượt E03 là 15.000 đồng và các loại vé tháng điện tử tham chiếu."
+        }
+      ]
+    },
+    {
+      "route_code": "E05",
+      "name": "Long Biên - Cầu Giấy - KĐT Smart City",
+      "service_window": "05:00-21:00",
+      "typical_frequency_minutes": 18,
+      "frequency_range_minutes": "15-20",
+      "mock_fare_vnd": 10000,
+      "fare_payment_required": true,
+      "route_summary": "Kết nối Long Biên với KĐT Smart City qua Yên Phụ, Thanh Niên, Thụy Khuê, Đào Tấn, Cầu Giấy, Xuân Thủy, Phạm Hùng và Đại lộ Thăng Long.",
+      "key_stops": [
+        "Long Biên (Điểm đỗ xe buýt Yên Phụ)",
+        "Đường Thanh Niên",
+        "Thụy Khuê",
+        "Đào Tấn",
+        "Điểm trung chuyển Cầu Giấy",
+        "Xuân Thủy",
+        "Phạm Hùng",
+        "KĐT Smart City"
+      ],
+      "sources": [
+        {
+          "url": "https://www.vinbus.vn/xe-buyt-dien-vinbus-chinh-thuc-tham-gia-mang-luoi-vthkcc-tai-ha-noi",
+          "note": "Nguồn chính thức về hướng tuyến E05 và giờ/tần suất công bố khi vận hành."
+        },
+        {
+          "url": "https://maps.vinbus.vn/hn/route/101102",
+          "note": "Bản đồ VinBus đối chiếu các điểm dừng E05."
+        },
+        {
+          "url": "https://vinbus.vn/lien-he",
+          "note": "Trang FAQ VinBus nêu giá vé lượt E05 là 10.000 đồng và các loại vé tháng điện tử tham chiếu."
+        }
+      ]
+    }
+  ],
+  "monthly_pass_registration": {
+    "mode": "simulated_only",
+    "supported_route_codes": ["E01", "E02", "E03", "E05"],
+    "required_fields": ["passenger_name", "phone_number", "route_code", "effective_date"],
+    "monthly_pass_options": [
+      {
+        "passenger_type": "priority_hs_sv_or_worker",
+        "mock_price_vnd": 70000
+      },
+      {
+        "passenger_type": "regular",
+        "mock_price_vnd": 140000
+      },
+      {
+        "passenger_type": "group_30_or_more",
+        "mock_price_vnd": 100000
+      }
+    ],
+    "source": "https://vinbus.vn/lien-he",
+    "safety_note": "Prices are an offline reference snapshot only. Do not collect payment credentials. A successful mock registration only returns a simulated registration ID; it does not charge the passenger or issue a valid ticket."
+  }
+}
