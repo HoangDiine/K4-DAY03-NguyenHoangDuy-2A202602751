@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Giao diện local cho VinBus ReAct Agent." />
+    <title>VinBus Agent Lab</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand" aria-label="VinBus Agent Lab">
+        <span class="brand-mark" aria-hidden="true">V</span>
+        <span>VINBUS <small>AGENT LAB</small></span>
+      </div>
+      <p id="provider-status" class="provider-status" role="status">Đang kiểm tra provider…</p>
+    </header>
+
+    <main class="layout">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Trợ lý dịch vụ khách hàng</p>
+        <h1 id="page-title">Tra tuyến. Đăng ký vé tháng giả lập.</h1>
+        <p>
+          Agent sử dụng ReAct và MCP để tra dữ liệu tuyến VinBus mock, sau đó
+          chỉ tạo mã đăng ký mô phỏng — không thanh toán hay phát hành vé thật.
+        </p>
+        <div class="sample-group" aria-label="Câu hỏi mẫu">
+          <button class="sample" type="button" data-prompt="Tra cứu tuyến OCT1 đi từ Royal City đến Ocean City.">Tra OCT1</button>
+          <button class="sample" type="button" data-prompt="Tôi đi từ Bến xe Mỹ Đình đến Ocean Park. Hãy tìm tuyến phù hợp, rồi đăng ký vé tháng giả lập loại phổ thông cho Trần Gia Huy, 0987654321, hiệu lực từ 01/10/2026.">Tra và đăng ký</button>
+        </div>
+      </section>
+
+      <section class="agent-panel" aria-labelledby="agent-title">
+        <div class="panel-heading">
+          <p class="eyebrow">Agent console</p>
+          <h2 id="agent-title">Bạn cần đi đâu?</h2>
+        </div>
+        <form id="chat-form">
+          <label for="message">Yêu cầu của bạn</label>
+          <textarea id="message" name="message" maxlength="1500" required placeholder="Ví dụ: Tra cứu tuyến E05 và giờ hoạt động."></textarea>
+          <div class="form-footer">
+            <p>Không nhập thông tin thanh toán.</p>
+            <button id="submit-button" type="submit">Gửi yêu cầu <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+
+        <section id="result" class="result" aria-live="polite" hidden>
+          <p class="result-label">Phản hồi từ Agent</p>
+          <div id="answer" class="answer"></div>
+          <ol id="trace" class="trace" aria-label="Các bước ReAct"></ol>
+        </section>
+        <p id="error" class="error" role="alert" hidden></p>
+      </section>
+    </main>
+    <footer>Dữ liệu tuyến là mock snapshot phục vụ lab, không phải lịch vận hành thời gian thực.</footer>
+    <script src="/app.js"></script>
+  </body>
+</html>

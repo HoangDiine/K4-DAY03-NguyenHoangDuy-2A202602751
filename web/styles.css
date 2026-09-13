@@ -1,0 +1,107 @@
+:root {
+  --ink: #10231d;
+  --muted: #5d6d66;
+  --canvas: #f4f6f1;
+  --surface: #ffffff;
+  --line: #d7dfd8;
+  --green: #0b7a53;
+  --green-dark: #075c3e;
+  --error: #9c2e22;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+.site-header, .layout, footer {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.site-header {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand { display: flex; align-items: center; gap: .65rem; font-weight: 800; letter-spacing: .08em; }
+.brand small { display: block; color: var(--muted); font-size: .62rem; letter-spacing: .13em; }
+.brand-mark { display: grid; place-items: center; width: 2rem; height: 2rem; color: white; background: var(--green); border-radius: .35rem; }
+.provider-status { margin: 0; color: var(--muted); font-size: .85rem; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 3rem;
+  padding-block: 5.5rem 4rem;
+}
+
+.intro { padding-top: 1rem; }
+.eyebrow { margin: 0 0 .75rem; color: var(--green); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+h1, h2 { margin: 0; line-height: 1.1; letter-spacing: -.035em; }
+h1 { max-width: 12ch; font-size: clamp(2.45rem, 5vw, 4.4rem); }
+h2 { font-size: 1.65rem; }
+.intro > p:not(.eyebrow) { max-width: 48ch; color: var(--muted); margin-block: 1.5rem; }
+
+.sample-group { display: flex; flex-wrap: wrap; gap: .6rem; }
+.sample, button {
+  border: 1px solid var(--line);
+  border-radius: .35rem;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+}
+.sample { padding: .55rem .75rem; font-size: .88rem; }
+.sample:hover, .sample:focus-visible { border-color: var(--green); color: var(--green-dark); }
+
+.agent-panel {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--green);
+  background: var(--surface);
+  box-shadow: 0 14px 30px rgba(16, 35, 29, .06);
+}
+.panel-heading { margin-bottom: 1.75rem; }
+label { display: block; margin-bottom: .5rem; font-size: .9rem; font-weight: 700; }
+textarea {
+  width: 100%;
+  min-height: 160px;
+  resize: vertical;
+  padding: .85rem;
+  border: 1px solid var(--line);
+  border-radius: .35rem;
+  color: var(--ink);
+  font: inherit;
+}
+textarea:focus-visible, button:focus-visible { outline: 3px solid #9ad7bb; outline-offset: 2px; border-color: var(--green); }
+.form-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+.form-footer p { margin: 0; color: var(--muted); font-size: .8rem; }
+#submit-button { padding: .72rem 1rem; border-color: var(--green); background: var(--green); color: white; font-weight: 700; }
+#submit-button:hover { background: var(--green-dark); }
+#submit-button:disabled { cursor: wait; opacity: .7; }
+
+.result { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.result-label { margin: 0 0 .65rem; color: var(--green); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; }
+.answer { white-space: pre-wrap; }
+.trace { display: grid; gap: .45rem; margin: 1.25rem 0 0; padding: 0; list-style-position: inside; color: var(--muted); font-size: .88rem; }
+.error { margin: 1.25rem 0 0; color: var(--error); font-weight: 650; }
+
+footer { padding-block: 1.5rem 2.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
+
+@media (max-width: 760px) {
+  .site-header { align-items: flex-start; gap: 1rem; padding-block: 1rem; }
+  .provider-status { text-align: right; }
+  .layout { grid-template-columns: 1fr; gap: 2rem; padding-block: 3rem; }
+  .agent-panel { padding: 1.25rem; }
+  .form-footer { align-items: flex-start; flex-direction: column; }
+  #submit-button { width: 100%; }
+}
