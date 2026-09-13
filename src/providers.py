@@ -18,6 +18,38 @@ if sys.stdout.encoding != 'utf-8':
 
 load_dotenv()
 
+
+def to_gemini_parameters(parameters: Dict[str, Any]) -> Dict[str, Any]:
+    """Remove JSON Schema fields rejected by Gemini function declarations."""
+    def sanitize(value: Any) -> Any:
+        if isinstance(value, dict):
+            return {
+                key: sanitize(item)
+                for key, item in value.items()
+                if key != "additionalProperties"
+            }
+        if isinstance(value, list):
+            return [sanitize(item) for item in value]
+        return value
+
+    return sanitize(parameters)
+
+
+def gemini_live_error_response(error: Exception) -> Dict[str, Any]:
+    """Return a safe final response when a configured live Gemini call fails."""
+    return {
+        "type": "text",
+        "content": (
+            "Gemini hiện không phản hồi được. Hãy chờ một lúc rồi thử lại; "
+            "hệ thống không chuyển sang Mock để tránh nhầm kết quả giả lập là kết quả live."
+        ),
+        "thought": (
+            "Dừng ReAct vì Gemini live API gặp lỗi "
+            f"{type(error).__name__}; không dùng Mock fallback."
+        ),
+    }
+
+
 class BaseLLMProvider:
     """Interface cơ sở cho các LLM Provider hỗ trợ Native Tool Calling"""
     def generate(self, prompt: str, system_prompt: str = "") -> str:
@@ -156,7 +188,7 @@ class GeminiProvider(BaseLLMProvider):
     """Google Gemini Provider (Native Tool Calling với Google GenAI SDK)"""
     def __init__(self, api_key: str = None, model: str = None):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
-        self.model_name = model or os.getenv("LLM_MODEL") or "gemini-2.5-flash"
+        self.model_name = model or os.getenv("LLM_MODEL") or "gemini-3.6-flash"
 
     def generate(self, prompt: str, system_prompt: str = "") -> str:
         if not self.api_key or self.api_key == "your_gemini_api_key_here":
@@ -190,7 +222,7 @@ class GeminiProvider(BaseLLMProvider):
                 function_declarations.append({
                     "name": tool["name"],
                     "description": tool.get("description", ""),
-                    "parameters": tool.get("parameters", {})
+                    "parameters": to_gemini_parameters(tool.get("parameters", {})),
                 })
 
             config = types.GenerateContentConfig(
@@ -223,8 +255,11 @@ class GeminiProvider(BaseLLMProvider):
                 }
 
         except Exception as e:
-            print(f"⚠️ [Gemini API Warning]: Không thể kết nối live API ({str(e)}). Tự động fallback về Mock.")
-            return MockOfflineProvider().generate_with_tools(prompt, tools_schema, system_prompt)
+            print(
+                "⚠️ [Gemini API Warning]: Gemini live API không phản hồi "
+                f"({type(e).__name__}). Không fallback về Mock."
+            )
+            return gemini_live_error_response(e)
 
 
 class OpenAIProvider(BaseLLMProvider):
