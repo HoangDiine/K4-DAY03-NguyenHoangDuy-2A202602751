@@ -13,8 +13,8 @@
 | **1. Multi-step Reasoning** | **5 / 5** | Với yêu cầu đi từ điểm A đến B rồi đăng ký vé tháng, Agent phải nhận diện điểm đi/đến, tra các tuyến phù hợp, đối chiếu tuyến với phạm vi vé, xác nhận thông tin hành khách và mới tạo đăng ký. Các bước có thứ tự; một FAQ tĩnh không đáp ứng được luồng này. |
 | **2. Tool Interaction** | **5 / 5** | Cần tối thiểu hai Tool qua MCP: `route_lookup` để truy vấn dữ liệu tuyến/trạm và `monthly_pass_register` để tạo đăng ký vé tháng. Dữ liệu lộ trình và trạng thái đăng ký là dữ liệu có cấu trúc, không nên để LLM tự nhớ hoặc tự tạo. |
 | **3. Dynamic Decision** | **4 / 5** | Agent chỉ đề xuất hoặc đăng ký loại vé sau khi quan sát kết quả tra tuyến: ví dụ, OCP2 chỉ phục vụ nội khu Ocean Park 2,3; yêu cầu qua Royal City cần OCT1. Trường hợp không có tuyến/thiếu thông tin phải hỏi lại thay vì gọi Tool đăng ký. Điểm chưa là 5 vì phạm vi lab dùng snapshot mock, chưa có dữ liệu vị trí xe và thanh toán thời gian thực. |
-| **4. Long Horizon Goal** | **4 / 5** | Mục tiêu “đi được tuyến phù hợp và có vé tháng hợp lệ” được giữ qua nhiều lượt: tra cứu, làm rõ lựa chọn, thu thập dữ liệu đăng ký, tạo mã đăng ký, rồi thông báo kết quả. Tuy nhiên đây là tác vụ ngắn theo phiên, chưa phải Agent tự chủ theo dõi dài ngày hay tự gia hạn vé. |
-| **TỔNG ĐIỂM AGENTIC FIT** | **18 / 20** | *18 > 12, nên bài toán phù hợp triển khai ReAct Agent System. Các câu hỏi giới thiệu/FAQ thuần túy vẫn nên dùng Chatbot Baseline để phản hồi nhanh và tiết kiệm token.* |
+| **4. Long Horizon Goal** | **2 / 5** | Mục tiêu “đi được tuyến phù hợp và có vé tháng hợp lệ” được giữ qua nhiều lượt: tra cứu, làm rõ lựa chọn, thu thập dữ liệu đăng ký, tạo mã đăng ký, rồi thông báo kết quả. Tuy nhiên đây là tác vụ ngắn theo phiên, chưa phải Agent tự chủ theo dõi dài ngày hay tự gia hạn vé. |
+| **TỔNG ĐIỂM AGENTIC FIT** | **16 / 20** | *16 > 12, nên bài toán phù hợp triển khai ReAct Agent System. Các câu hỏi giới thiệu/FAQ thuần túy vẫn nên dùng Chatbot Baseline để phản hồi nhanh và tiết kiệm token.* |
 
 ---
 
